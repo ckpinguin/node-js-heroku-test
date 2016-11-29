@@ -1,4 +1,3 @@
-This is our heroku nodejs test project for cool faces
 # node-js-getting-started
 
 A barebones Node.js app using [Express 4](http://expressjs.com/).

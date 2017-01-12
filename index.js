@@ -83,11 +83,17 @@ router.put('/votes/:voteId/choices/:choiceId/vote', function(req, res) {
 router.get('/get_ticket', function(req, res) {
     const token = req.query.token;
     console.log('Got a GET request for /get_ticket');
-    res.send('Page Listing');
+    const space = parking.getSpace();
+    const ret = {
+        space: space
+    };
+    console.log('Giving it parking space: ' + space);
+    res.send(ret);
 });
 
 router.post('/buy_ticket', function(req, res) {
-
+    const token = req.query.token;
+    const checkToken = parking.payTicket(token);
 });
 
 router.get('/open_gate', function(req, res) {

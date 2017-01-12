@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
 var cors = require('cors');
-import {dd} from './toolbox';
+var parking = require('./parking');
 
 var app = express();
 
@@ -77,7 +77,17 @@ router.put('/votes/:voteId/choices/:choiceId/vote', function(req, res) {
     const choiceId = parseInt(req.params.choiceId);
     console.log(`Got a PUT request for '/votes/${voteId}/choices/${choiceId}/vote`);
     console.info('from: ' + req.ip + ', for ' + req.hostname);
-    dd(choiceId, 'choiceId', `VoteServer.router.put(/votes/${voteId}/choices/${choiceId}/vote)`);
+});
+
+// This responds a GET request for the /list_user page.
+router.get('/get_ticket', function(req, res) {
+    console.log('Got a GET request for /get_ticket');
+    res.send('Page Listing');
+});
+
+router.get('/open_gate', function(req, res) {
+    console.log('Got a GET request for /open_gate with token: ' + req.query.token );
+    res.send('Open the gate');
 });
 
 // REGISTER OUR ROUTES -------------------------------
@@ -93,8 +103,4 @@ app.listen(app.get('port'), function(error) {
         var port = app.get('port');
         console.info('==> 🌎  Express is Listening on ' + host + ':' + port + '. Visit http://' + host + ':' + port + '/ in your browser.');
     }
-});
-
-app.listen(app.get('port'), function() {
-    console.log('Node app is running on port', app.get('port'));
 });

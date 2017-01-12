@@ -81,13 +81,19 @@ router.put('/votes/:voteId/choices/:choiceId/vote', function(req, res) {
 
 // This responds a GET request for the /list_user page.
 router.get('/get_ticket', function(req, res) {
+    const token = req.query.token;
     console.log('Got a GET request for /get_ticket');
     res.send('Page Listing');
 });
 
+router.post('/buy_ticket', function(req, res) {
+
+});
+
 router.get('/open_gate', function(req, res) {
-    console.log('Got a GET request for /open_gate with token: ' + req.query.token );
-    res.send('Open the gate');
+    const token = req.query.token;
+    console.log('Got a GET request for /open_gate with token: ' + token );
+    res.send('Open the gate for token: ' + token);
 });
 
 // REGISTER OUR ROUTES -------------------------------

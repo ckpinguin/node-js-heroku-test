@@ -72,17 +72,10 @@ router.put('/test', function(req, res) {
     res.send('PUT request');
 });
 
-router.put('/votes/:voteId/choices/:choiceId/vote', function(req, res) {
-    const voteId = parseInt(req.params.voteId);
-    const choiceId = parseInt(req.params.choiceId);
-    console.log(`Got a PUT request for '/votes/${voteId}/choices/${choiceId}/vote`);
-    console.info('from: ' + req.ip + ', for ' + req.hostname);
-});
-
 // This responds a GET request for the /list_user page.
 router.get('/get_ticket', function(req, res) {
-    const token = req.query.token;
     console.log('Got a GET request for /get_ticket');
+    const token = req.query.token;
     const space = parking.getSpace();
     const ret = {
         space: space
@@ -91,14 +84,23 @@ router.get('/get_ticket', function(req, res) {
     res.send(ret);
 });
 
-router.post('/buy_ticket', function(req, res) {
+router.get('/buy_ticket', function(req, res) {
+    console.log('Got a GET request for /buy_ticket');
     const token = req.query.token;
-    const checkToken = parking.payTicket(token);
+    const time = req.query.startTime;
+    const space = req.query.space;
+    const answer = {};
+    try {
+        answer.token = parking.payTicket(space, token);
+    } catch(err) {
+        answer.error  = err;
+    }
+    res.send(answer);
 });
 
 router.get('/open_gate', function(req, res) {
-    const token = req.query.token;
     console.log('Got a GET request for /open_gate with token: ' + token );
+    const token = req.query.token;
     res.send('Open the gate for token: ' + token);
 });
 

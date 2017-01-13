@@ -84,14 +84,14 @@ router.get('/get_ticket', function(req, res) {
     res.send(ret);
 });
 
-router.get('/buy_ticket', function(req, res) {
+router.get('/pay_ticket', function(req, res) {
     console.log('Got a GET request for /buy_ticket');
     const token = req.query.token;
     const time = req.query.startTime;
     const space = req.query.space;
     const answer = {};
     try {
-        answer.token = parking.payTicket(space, token);
+        answer.checkedToken = parking.payTicket(space, token);
     } catch(err) {
         answer.error  = err;
     }
@@ -99,9 +99,16 @@ router.get('/buy_ticket', function(req, res) {
 });
 
 router.get('/open_gate', function(req, res) {
-    console.log('Got a GET request for /open_gate with token: ' + token );
     const token = req.query.token;
-    res.send('Open the gate for token: ' + token);
+    console.log('Got a GET request for /open_gate with token: ' + token );
+    const ret = {};
+    if (parking.openGate(token)) {
+        ret.gateOpen = true;
+    } else {
+        ret.gateOpen = false;
+        ret.error = 'Gate could not be opened, please call administration: 2334-352-22334';
+    }
+    res.send(ret);
 });
 
 // REGISTER OUR ROUTES -------------------------------

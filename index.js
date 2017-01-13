@@ -77,8 +77,10 @@ router.get('/get_ticket', function(req, res) {
     console.log('Got a GET request for /get_ticket');
     const token = req.query.token;
     const space = parking.getSpace();
+    const ticketNo = parking.getTicketNo();
     const ret = {
-        space: space
+        eTicketNumber: ticketNo,
+        proposedParkingspace: space
     };
     console.log('Giving it parking space: ' + space);
     res.send(ret);

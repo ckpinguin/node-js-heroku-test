@@ -1,8 +1,16 @@
+function getTicketNo() {
+    return parseInt(Math.random() * 2000); // TODO: get a decent
+}
 
 function getSpace() {
     const space = parseInt(Math.random() * 1000); // TODO: get nearest free parking space
     registerSpace(space);
     return space;
+}
+
+function registerSpace(space) {
+    const register = space; // TODO: DB-Backend to store stuff
+    return true;
 }
 
 function payTicket(space, token) {
@@ -22,14 +30,14 @@ function payTicket(space, token) {
 function pay(sum) {
     const retObj = {// In production put credit-card API-call (async) here
         paid: Math.random() > 0.7 ? false : true, // 70% chance to pay ;-)
-        checkMulti: 42
+        checkMulti: 42 // TODO: use a decent crypto library for security
     };
     return retObj;
 }
 
 function isTokenPaid(token) {
     const oldToken = token / 42;
-    if (token / oldToken == 42) { // TODO: get old token from db
+    if (token / oldToken == 42) { // TODO: get old token from db for this check
         return true;
     } else {
         return false;
@@ -38,11 +46,6 @@ function isTokenPaid(token) {
 
 function isNearGate() {
     return true; // TODO: Read sensors
-}
-
-function registerSpace(space) {
-    const register = space; // TODO: DB-Backend to store stuff
-    return true;
 }
 
 function openGate(token) {
@@ -57,3 +60,4 @@ function openGate(token) {
 exports.getSpace = getSpace;
 exports.payTicket = payTicket;
 exports.openGate = openGate;
+exports.getTicketNo = getTicketNo;
